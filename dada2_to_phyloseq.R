@@ -5,7 +5,9 @@ otu_dada2 <- readRDS("seq_table.RDS")
 tax_dada2 <- readRDS("tax_table.RDS")
 
 ps <- phyloseq(otu_table(otu_dada2, taxa_are_rows=TRUE), tax_table(tax_dada2))
-
+sample <- read.csv("meta.csv")
+row.names(sample) <- sample$X.SampleID
+sample_data(ps)  <- sample
 
 #relative abundance
 rel <- transform_sample_counts(ps, function(OTU) OTU/sum(OTU))
